@@ -167,6 +167,7 @@ metadata:
   name: aws-otel-eks-ci
   namespace: aws-otel-eks
 spec:
+  hostNetwork: true
   selector:
     matchLabels:
       name: aws-otel-eks-ci
@@ -178,6 +179,10 @@ spec:
       containers:
         - name: aws-otel-collector
           image: amazon/aws-otel-collector:v0.11.0
+          ports:
+           - containerPort: 9411
+             hostPort: 9411
+             name: zipkin-receiver
           env:
             - name: K8S_NODE_NAME
               valueFrom:
