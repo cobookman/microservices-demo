@@ -29,8 +29,12 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: ZIPKIN
-          value: http://zipkin.jaeger.svc.cluster.local:9411/api/v1/spans
+         - name: MY_NODE_NAME
+           valueFrom:
+             fieldRef:
+               fieldPath: spec.nodeName
+         - name: ZIPKIN
+           value: http://$(MY_NODE_NAME):9411/api/v1/spans
         securityContext:
           runAsNonRoot: true
           runAsUser: 10001
