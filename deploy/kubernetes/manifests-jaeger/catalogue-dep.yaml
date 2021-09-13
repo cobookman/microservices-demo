@@ -20,8 +20,12 @@ spec:
       - name: catalogue
         image: weaveworksdemos/catalogue:0.3.5
         env:
+        - name: MY_NODE_NAME
+           valueFrom:
+             fieldRef:
+               fieldPath: spec.nodeName
          - name: ZIPKIN
-           value: http://zipkin.jaeger.svc.cluster.local:9411/api/v1/spans
+           value: http://$(MY_NODE_NAME):9411/api/v1/spans
         resources:
           limits:
             cpu: 100m
